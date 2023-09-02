@@ -1,0 +1,1 @@
+you can easily create an executable by using pyinstaller

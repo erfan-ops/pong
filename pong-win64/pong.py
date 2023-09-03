@@ -12,12 +12,13 @@ from logic import Logic
 class Game(Screen, Logic):
     def __init__(self) -> None:
         pygame.init()
-        super().__init__()
+        Screen.__init__(self)
+        Logic.__init__(self)
         self.font = pygame.font.Font("fonts/Kablammo-Regular-VariableFont_MORF.ttf", 50)
         self.timer_font = pygame.font.Font("fonts/Kablammo-Regular-VariableFont_MORF.ttf", 200)
         self.clock = pygame.time.Clock()
         self._REFRESH_RATE: int = EnumDisplaySettings(EnumDisplayDevices().DeviceName, -1).DisplayFrequency
-        self.TARGET_FPS = self._REFRESH_RATE
+        self.TARGET_FPS = self._REFRESH_RATE if self._REFRESH_RATE > 120 else 120
     
     
     def get_fps(self):

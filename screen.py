@@ -7,6 +7,7 @@ class Screen:
         self.width_ratio = SCREEN_WIDTH/1920
         self.height_ratio = SCREEN_HEIGHT/1080
         self.screen = pygame.display.set_mode(RES)
+        pygame.display.set_icon(pygame.image.load("assets/ball.png"))
         self.bg_color = BG_COLOR
     
     

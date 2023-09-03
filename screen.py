@@ -48,10 +48,11 @@ class Screen:
                 self.screen.fill(self.bg_color)
                 timer = self.timer_font.render(str(i), True, "#ffffff")
                 timer_rect = timer.get_rect()
-                self.screen.blit(timer, (SCREEN_WIDTH//2-timer_rect.width//2, SCREEN_HEIGHT//2-timer_rect.height//2))
+                self.screen.blit(timer, (int(SCREEN_WIDTH/2-timer_rect.width/2), int(SCREEN_HEIGHT/2-timer_rect.height/2)))
                 pygame.display.flip()
                 sleep(c_speed)
     
     
-    def show_score(self, score_img, score_rect):
+    def show_score(self, score_img: pygame.Surface, score_rect: pygame.Rect):
         self.screen.blit(score_img, (int(SCREEN_WIDTH/2-score_rect.width/2), SCREEN_HEIGHT//27))
+        pygame.display.flip()

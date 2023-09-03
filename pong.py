@@ -1,7 +1,6 @@
 import pygame
 from settings import *
 from random import choice, randint
-from sys import exit as sysExit
 from win32api import EnumDisplaySettings, EnumDisplayDevices
 from screen import Screen
 from gameObjects import *
@@ -122,7 +121,6 @@ class Game(Screen, Logic):
                     opponent.down()
 
 
-
             if ball.go_right:
                 ball.rect.x += ball.speed_x
             else:
@@ -131,11 +129,13 @@ class Game(Screen, Logic):
             
             
             if ball.rect.bottom >= SCREEN_HEIGHT:
+                collide_sound.play()
                 ball.default_speed_y = -abs(ball.default_speed_y)
-                collide_sound.play()
+                ball.rect.bottom = SCREEN_HEIGHT-1
             elif ball.rect.top <= 0:
-                ball.default_speed_y = abs(ball.default_speed_y)
                 collide_sound.play()
+                ball.default_speed_y = abs(ball.default_speed_y)
+                ball.rect.top = 1
             
             
             if ball.rect.collideobjectsall([player.rect, opponent.rect]):
@@ -148,7 +148,6 @@ class Game(Screen, Logic):
                 elif ball.rect.colliderect(opponent.rect) and not ball.go_right:
                     ball.calc_angle(opponent.rect)
                     ball.go_right = True
-                    print(opponent.target)
                     opponent.target = randint(0, opponent.rect.height)
             
             

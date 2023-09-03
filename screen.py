@@ -12,7 +12,6 @@ class Screen:
     
     
     def render(self, *args) -> None:
-            self.screen.fill(self.bg_color)
             for obj in args:
                 self.screen.blit(obj.img, obj.rect)
     

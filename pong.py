@@ -1,6 +1,6 @@
 import pygame
 from settings import *
-from random import choice
+from random import choice, randint
 from sys import exit as sysExit
 from win32api import EnumDisplaySettings, EnumDisplayDevices
 from screen import Screen
@@ -50,6 +50,7 @@ class Game(Screen, Logic):
         
         opponent = Paddle((SCREEN_WIDTH//SPACE_FROM_EDGE, SCREEN_HEIGHT//2), O_SPEED, O_SIZE)
         opponent.img = pygame.transform.flip(opponent.img, True, False)
+        opponent.target = randint(0, opponent.rect.height)
         
         # --balls?-- #
         ball = Ball(BALL_SIZE)
@@ -57,8 +58,7 @@ class Game(Screen, Logic):
         # --more variables-- #
         score_img = self.font.render(f"{opponent.score} | {player.score}", True, score_color)
         score_rect = score_img.get_rect()
-    
-        # game loop #
+        
 
         # game loop #
         start_game_sound.play()
@@ -97,6 +97,7 @@ class Game(Screen, Logic):
             self.get_fps()
             
             # rendering onjects
+            self.screen.fill(self.bg_color)
             self.render(player,
                         opponent,
                         ball)
@@ -113,17 +114,11 @@ class Game(Screen, Logic):
                 player.down()
             
             
-            if player.rect.top < 0:
-                player.rect.top = 0
-            elif player.rect.bottom > SCREEN_HEIGHT:
-                player.rect.bottom = SCREEN_HEIGHT
-            
-            
             # *bot AI* #
             if not ball.go_right:
-                if ball.rect.top < opponent.rect.top:
+                if ball.rect.top < opponent.rect.top + opponent.target and opponent.rect.top > 0:
                     opponent.up()
-                elif ball.rect.bottom > opponent.rect.bottom:
+                elif ball.rect.bottom > opponent.target and opponent.rect.bottom < SCREEN_HEIGHT:
                     opponent.down()
 
 
@@ -153,6 +148,8 @@ class Game(Screen, Logic):
                 elif ball.rect.colliderect(opponent.rect) and not ball.go_right:
                     ball.calc_angle(opponent.rect)
                     ball.go_right = True
+                    print(opponent.target)
+                    opponent.target = randint(0, opponent.rect.height)
             
             
             elif ball.rect.right >= SCREEN_WIDTH or ball.rect.left <= 0:

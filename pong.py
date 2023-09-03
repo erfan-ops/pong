@@ -13,7 +13,7 @@ class Game(Screen, Logic):
     def __init__(self) -> None:
         pygame.init()
         super().__init__()
-        self.font = pygame.font.Font("fonts/Kablammo-Regular-VariableFont_MORF.ttf", 50)
+        self.font = pygame.font.Font("fonts\Kablammo-Regular-VariableFont_MORF.ttf", 50)
         self.timer_font = pygame.font.Font("fonts/Kablammo-Regular-VariableFont_MORF.ttf", 200)
         self.clock = pygame.time.Clock()
         self._REFRESH_RATE: int = EnumDisplaySettings(EnumDisplayDevices().DeviceName, -1).DisplayFrequency
@@ -57,7 +57,8 @@ class Game(Screen, Logic):
         # --more variables-- #
         score_img = self.font.render(f"{opponent.score} | {player.score}", True, score_color)
         score_rect = score_img.get_rect()
-        
+    
+        # game loop #
 
         # game loop #
         start_game_sound.play()
@@ -96,7 +97,7 @@ class Game(Screen, Logic):
             self.get_fps()
             
             # rendering onjects
-            self.screen.blit(score_img, (int(SCREEN_WIDTH/2-score_rect.width/2), SCREEN_HEIGHT//27))
+            self.show_score(score_img, score_rect)
             self.render(player,
                         opponent,
                         ball)

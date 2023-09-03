@@ -1,5 +1,6 @@
 from settings import *
 import pygame
+from time import sleep
 
 class Screen:
     def __init__(self) -> None:
@@ -37,3 +38,15 @@ class Screen:
             if line_rect[2] >= SCREEN_WIDTH-(space_from_edge)*2:
                 del loading_img
                 return None
+    
+    
+    def count_down(self, c_speed:float):
+            c_speed /= 3
+            for i in range(3, 0, -1):
+                self.check_game_quit()
+                self.screen.fill(self.bg_color)
+                timer = self.timer_font.render(str(i), True, "#ffffff")
+                timer_rect = timer.get_rect()
+                self.screen.blit(timer, (SCREEN_WIDTH//2-timer_rect.width//2, SCREEN_HEIGHT//2-timer_rect.height//2))
+                pygame.display.flip()
+                sleep(c_speed)

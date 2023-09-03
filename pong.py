@@ -3,50 +3,22 @@ from settings import *
 from random import choice
 from sys import exit as sysExit
 from win32api import EnumDisplaySettings, EnumDisplayDevices
-from time import sleep
 from screen import Screen
 from gameObjects import *
+from logic import Logic
 
 
 
-class Game(Screen):
+class Game(Screen, Logic):
     def __init__(self) -> None:
         pygame.init()
-        super().__init__()
+        Screen.__init__(self)
+        Logic.__init__(self)
         self.font = pygame.font.Font("fonts/Kablammo-Regular-VariableFont_MORF.ttf", 50)
         self.timer_font = pygame.font.Font("fonts/Kablammo-Regular-VariableFont_MORF.ttf", 200)
         self.clock = pygame.time.Clock()
         self._REFRESH_RATE: int = EnumDisplaySettings(EnumDisplayDevices().DeviceName, -1).DisplayFrequency
         self.TARGET_FPS = self._REFRESH_RATE if self._REFRESH_RATE > 120 else 120
-
-
-    def count_down(self, c_speed:float):
-            c_speed /= 3
-            for i in range(3, 0, -1):
-                self.check_game_quit()
-                self.screen.fill(self.bg_color)
-                timer = self.timer_font.render(str(i), True, "#ffffff")
-                timer_rect = timer.get_rect()
-                self.screen.blit(timer, (SCREEN_WIDTH//2-timer_rect.width//2, SCREEN_HEIGHT//2-timer_rect.height//2))
-                pygame.display.flip()
-                sleep(c_speed)
-    
-    
-    def reset(self, *args) -> None:
-        for obj in args:
-            obj.reset()
-        self.count_down(1.2)
-    
-    
-    def quit_game(self):
-        pygame.quit()
-        sysExit()
-    
-    
-    def check_game_quit(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                self.quit_game()
     
     
     def get_fps(self):

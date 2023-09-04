@@ -26,8 +26,10 @@ class Game(Screen, Logic):
     def main(self) -> None:
         pygame.mouse.set_visible(False)
         
-        # --variables-- #
-        score_color = "#ffffff"
+        # --colors-- #
+        WHITE = "#ffffff"
+        GREEN = "#20ff40"
+        RED = "#ff3020"
         
         # --sounds-- #
         start_game_sound: pygame.mixer.Sound = pygame.mixer.Sound("sounds/start.wav")
@@ -36,11 +38,6 @@ class Game(Screen, Logic):
         win_sounds: tuple[pygame.mixer.Sound, pygame.mixer.Sound, pygame.mixer.Sound] = (pygame.mixer.Sound("sounds/won.wav"),
                                                                                          pygame.mixer.Sound("sounds/won2.wav"),
                                                                                          pygame.mixer.Sound("sounds/won3.wav"))
-        
-        # --colors-- #
-        WHITE = "#ffffff"
-        GREEN = "#20ff40"
-        RED = "#ff3020"
         
         # game objects #
         # --paddles-- #
@@ -54,7 +51,8 @@ class Game(Screen, Logic):
         # --balls?-- #
         ball = Ball(BALL_SIZE)
         
-        # --more variables-- #
+        # --variables-- #
+        score_color = WHITE
         score_img = self.font.render(f"{opponent.score} | {player.score}", True, score_color)
         score_rect = score_img.get_rect()
         
@@ -64,10 +62,7 @@ class Game(Screen, Logic):
         self.start_screen()
         while True:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.quit_game()
-                
-                elif event.type == pygame.KEYUP:
+                if event.type == pygame.KEYUP:
                     if event.key == pygame.K_UP or event.key == pygame.K_w or event.key == pygame.K_RETURN:
                         player.is_going_up = False
                     
@@ -91,6 +86,9 @@ class Game(Screen, Logic):
                         score_img = self.font.render(f"{opponent.score} | {player.score}", True, score_color)
                         score_rect = score_img.get_rect()
                         score_color = WHITE
+                
+                elif event.type == pygame.QUIT:
+                    self.quit_game()
             
             
             self.get_fps()
@@ -125,6 +123,7 @@ class Game(Screen, Logic):
                 ball.rect.x += ball.speed_x
             else:
                 ball.rect.x -= ball.speed_x
+            
             ball.rect.y += ball.speed_y
             
             
@@ -138,17 +137,18 @@ class Game(Screen, Logic):
                 ball.rect.top = 1
             
             
-            if ball.rect.collideobjectsall([player.rect, opponent.rect]):
+            if ball.rect.colliderect(player.rect) and ball.go_right:
                 collide_sound.play()
                 ball.default_speed_x += 1
-                if ball.rect.colliderect(player.rect) and ball.go_right:
-                    ball.calc_angle(player.rect)
-                    ball.go_right = False
-                
-                elif ball.rect.colliderect(opponent.rect) and not ball.go_right:
-                    ball.calc_angle(opponent.rect)
-                    ball.go_right = True
-                    opponent.target = randint(0, opponent.rect.height)
+                ball.calc_angle(player.rect)
+                ball.go_right = False
+            
+            elif ball.rect.colliderect(opponent.rect) and not ball.go_right:
+                collide_sound.play()
+                ball.default_speed_x += 1
+                ball.calc_angle(opponent.rect)
+                ball.go_right = True
+                opponent.target = randint(0, opponent.rect.height)
             
             
             elif ball.rect.right >= SCREEN_WIDTH or ball.rect.left <= 0:

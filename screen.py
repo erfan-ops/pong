@@ -1,9 +1,11 @@
 from settings import *
 import pygame
 from time import sleep
+from logic import Logic
 
-class Screen:
+class Screen(Logic):
     def __init__(self) -> None:
+        super().__init__()
         self.width_ratio = SCREEN_WIDTH/1920
         self.height_ratio = SCREEN_HEIGHT/1080
         self.screen = pygame.display.set_mode(RES)

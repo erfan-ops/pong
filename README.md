@@ -3,3 +3,9 @@
 
 
 - you can easily create an executable by using pyinstaller
+```shell
+pip install -U pyinstaller
+pyinstaller -F -w -i icon.ico pong.py
+```
+
+- btw the loading screen is unnecessary its not loading anything

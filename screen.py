@@ -14,8 +14,8 @@ class Screen(Logic):
     
     
     def render(self, *args) -> None:
-            for obj in args:
-                self.screen.blit(obj.img, obj.rect)
+        for obj in args:
+            self.screen.blit(obj.img, obj.rect)
     
     
     def start_screen(self) -> None:
@@ -43,17 +43,17 @@ class Screen(Logic):
     
     
     def count_down(self, c_speed:float):
-            c_speed /= 3
-            for i in range(3, 0, -1):
-                self.check_game_quit()
-                self.screen.fill(self.bg_color)
-                timer = self.timer_font.render(str(i), True, "#ffffff")
-                timer_rect = timer.get_rect()
-                self.screen.blit(timer, (int(SCREEN_WIDTH/2-timer_rect.width/2), int(SCREEN_HEIGHT/2-timer_rect.height/2)))
-                pygame.display.flip()
-                sleep(c_speed)
+        c_speed /= 3
+        for i in range(3, 0, -1):
+            self.check_game_quit()
+            self.screen.fill(self.bg_color)
+            timer = self.timer_font.render(str(i), True, "#ffffff")
+            timer_rect = timer.get_rect()
+            self.screen.blit(timer, (int(SCREEN_WIDTH/2-timer_rect.width/2), int(SCREEN_HEIGHT/2-timer_rect.height/2)))
+            pygame.display.flip()
+            sleep(c_speed)
     
     
     def show_score(self, score_img: pygame.Surface, score_rect: pygame.Rect):
         self.screen.blit(score_img, (int(SCREEN_WIDTH/2-score_rect.width/2), SCREEN_HEIGHT//27))
-        pygame.display.flip()
+        # pygame.display.flip()

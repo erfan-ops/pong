@@ -95,10 +95,10 @@ class Game(Screen, Logic):
             
             # rendering onjects
             self.screen.fill(self.bg_color)
+            self.show_score(score_img, score_rect)
             self.render(player,
                         opponent,
                         ball)
-            self.show_score(score_img, score_rect)
             
             
             player.init(self.FPS)

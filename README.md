@@ -10,7 +10,7 @@ pyinstaller -F -w -i icon.ico pong.py
 
 
 <p align="center">
-  <img src="https://github.com/erfan-ops/pong/blob/main/examples/example.png" width=350 />
+  <img src="https://github.com/erfan-ops/pong/blob/main/examples/example.png" width=650 />
 </p>
 
 

@@ -1,0 +1,15 @@
+{
+    "screen-width": 1600,
+    "screen-height": 900,
+    "bg-color": "#000000",
+    "player-speed": 20,
+    "player-size": 150,
+
+    "opponent-speed": 20,
+    "opponent-size": 180,
+
+    "ball-speed": 15,
+    "ball-size": 70,
+
+    "paddle-space-from-screen": 100
+}
